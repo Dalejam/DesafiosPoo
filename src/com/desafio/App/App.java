@@ -29,8 +29,12 @@ public class App {
                     int participantes = Integer.parseInt( JOptionPane.showInputDialog("Ingrese cantidad de Jugadores\n"));
                     for(int i=0;i<participantes;i++){
                         String nombre= JOptionPane.showInputDialog("Ingrese Nombre de participante"+(i+1));
-                        int pote= Integer.parseInt(JOptionPane.showInputDialog("Ingrese valor de pote de participante "+(i+1),poteInicial));
-                        pote=pote-poteInicial;
+                        int pote = Integer.parseInt(JOptionPane.showInputDialog("Ingrese valor de pote de participante " + (i + 1), poteInicial));
+                        while(pote < poteInicial){
+                            JOptionPane.showMessageDialog(null,"valor ingresado es inferior a pote inicial debe ingresar valor superior a este para iniciar juego"+poteInicial);
+                            pote = Integer.parseInt(JOptionPane.showInputDialog("Ingrese valor de pote de participante " + (i + 1), poteInicial));
+                        }
+                        pote = pote - poteInicial;
                         Jugador guardarJugador = new Jugador(nombre,pote);
                         jugador.add(guardarJugador);
                         guardarJugador=null;
@@ -61,6 +65,10 @@ public class App {
                                     int apostar = JOptionPane.showConfirmDialog(null, jugador.get(j).getNombre() + "\n¿Desea Apostar?\n" + "El pote tiene el valor de: " + guayabita.getPoteJ(), "GUAYABITA", JOptionPane.YES_NO_OPTION, 0, iconoDados);
                                     if (apostar == 0) {
                                         int apuesta = Integer.parseInt(JOptionPane.showInputDialog(jugador.get(j).getNombre() + "\n¿Cuanto desea apostar?\n recuerde que el pote esta en " + guayabita.getPoteJ() + "\n su saldo es: " + jugador.get(j).getPote()));
+                                        while(apuesta> guayabita.getPoteJ()){
+                                            JOptionPane.showMessageDialog(null,"Apuesta no puede ser mayor al valor del pote actual\n Por favor ingrese valor inferior");
+                                            apuesta=Integer.parseInt(JOptionPane.showInputDialog(jugador.get(j).getNombre() + "\n¿Cuanto desea apostar?\n recuerde que el pote esta en " + guayabita.getPoteJ() + "\n su saldo es: " + jugador.get(j).getPote()));
+                                        }
                                         int dadoDos = guayabita.tirarDados();
                                         Icon iconoDadoDos = new ImageIcon(App.class.getResource("dado " + dadoDos + ".png"));
                                         JOptionPane.showOptionDialog(null, jugador.get(j).getNombre() + " Su dado es ", "GUAYABITA", 0, 0,
@@ -110,7 +118,7 @@ public class App {
                             "3.Se debe tirar los datos una vez y de pendiendo del valor del dado se podra o no hacer apuesta\n" +
                             "4.Si desea hacer la apuesta debe tener en cuenta el valor de pote que tiene el juego e ingresar el valor a apostar\n" +
                             "5.El juego termina cuando el pote del juego este en cero o los jugadores ya no tengan que apostar\n" +
-                            "\n REGLAS:\n 1.Cada jugador debe aportar el valor correspondiente al pote inicial\n" +
+                            "\n REGLAS:\n1.Cada jugador debe aportar el valor correspondiente al pote inicial\n" +
                             "2.Si los dados sale 1 o 6 debe seder el turno\n" +
                             "3.Si los dados sale entre 2 o 5 puede apostar\n" +
                             "4.Solo se puede apostar valor inferior o igual al pote del juego\n";
