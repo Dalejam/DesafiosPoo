@@ -26,11 +26,10 @@ public class App {
             switch (opcion){
                 case JUGAR:
                     int poteInicial =Integer.parseInt( JOptionPane.showInputDialog("Ingrese Valor de pote para iniciar juego"));
-                    //JOptionPane.showMessageDialog(null,"El valor del pote incial para jugar es: "+guayabita.getPoteJ(),"GUAYABITA",JOptionPane.INFORMATION_MESSAGE);
                     int participantes = Integer.parseInt( JOptionPane.showInputDialog("Ingrese cantidad de Jugadores\n"));
                     for(int i=0;i<participantes;i++){
                         String nombre= JOptionPane.showInputDialog("Ingrese Nombre de participante"+(i+1));
-                        int pote= Integer.parseInt(JOptionPane.showInputDialog("Ingrese valor de pote de participante "+(i+1)));
+                        int pote= Integer.parseInt(JOptionPane.showInputDialog("Ingrese valor de pote de participante "+(i+1),poteInicial));
                         pote=pote-poteInicial;
                         Jugador guardarJugador = new Jugador(nombre,pote);
                         jugador.add(guardarJugador);
@@ -59,9 +58,9 @@ public class App {
                                         }
                                     }
                                 } else {
-                                    int apostar = JOptionPane.showConfirmDialog(null, jugador.get(j).getNombre() + "¿Desea Apostar?\n" + "El pote tiene el valor de: " + guayabita.getPoteJ(), "GUAYABITA", JOptionPane.YES_NO_OPTION, 0, iconoDados);
+                                    int apostar = JOptionPane.showConfirmDialog(null, jugador.get(j).getNombre() + "\n¿Desea Apostar?\n" + "El pote tiene el valor de: " + guayabita.getPoteJ(), "GUAYABITA", JOptionPane.YES_NO_OPTION, 0, iconoDados);
                                     if (apostar == 0) {
-                                        int apuesta = Integer.parseInt(JOptionPane.showInputDialog(jugador.get(j).getNombre() + "¿Cuanto desea apostar?\n recuerde que el pote esta en " + guayabita.getPoteJ() + "\n su saldo es: " + jugador.get(j).getPote()));
+                                        int apuesta = Integer.parseInt(JOptionPane.showInputDialog(jugador.get(j).getNombre() + "\n¿Cuanto desea apostar?\n recuerde que el pote esta en " + guayabita.getPoteJ() + "\n su saldo es: " + jugador.get(j).getPote()));
                                         int dadoDos = guayabita.tirarDados();
                                         Icon iconoDadoDos = new ImageIcon(App.class.getResource("dado " + dadoDos + ".png"));
                                         JOptionPane.showOptionDialog(null, jugador.get(j).getNombre() + " Su dado es ", "GUAYABITA", 0, 0,
@@ -85,6 +84,9 @@ public class App {
                                     }
                                 }
                             }
+                            if(guayabita.getPoteJ()==0){
+                                break;
+                            }
                         }
                     }
                     if(continuar==false){
@@ -97,6 +99,10 @@ public class App {
                             JOptionPane.showMessageDialog(null,resultado.getNombre()+" Su resultado final es: "+resultado.getPote());
                         });
                     }
+                    jugador.clear();
+                    resultadosJugadores.clear();
+                    guayabita.setPoteJ(0);
+
                     break;
                 case INSTRUCCIONES:
                     String instruccinesReglas="INSTRUCCIONES:\n 1.Debe ingresar cantidad de participates al juego \n " +
