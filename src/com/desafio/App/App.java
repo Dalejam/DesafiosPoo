@@ -29,10 +29,10 @@ public class App {
                     int participantes = Integer.parseInt( JOptionPane.showInputDialog("Ingrese cantidad de Jugadores\n"));
                     for(int i=0;i<participantes;i++){
                         String nombre= JOptionPane.showInputDialog("Ingrese Nombre de participante"+(i+1));
-                        int pote = Integer.parseInt(JOptionPane.showInputDialog("Ingrese valor de pote de participante " + (i + 1), poteInicial));
+                        int pote = Integer.parseInt(JOptionPane.showInputDialog(nombre+" Ingrese valor de pote para iniciar juego debe ser mayor a pote inicial " , poteInicial));
                         while(pote < poteInicial){
                             JOptionPane.showMessageDialog(null,"valor ingresado es inferior a pote inicial debe ingresar valor superior a este para iniciar juego"+poteInicial);
-                            pote = Integer.parseInt(JOptionPane.showInputDialog("Ingrese valor de pote de participante " + (i + 1), poteInicial));
+                            pote = Integer.parseInt(JOptionPane.showInputDialog(nombre+" Ingrese valor de pote para iniciar juego ", poteInicial));
                         }
                         pote = pote - poteInicial;
                         Jugador guardarJugador = new Jugador(nombre,pote);
@@ -93,20 +93,22 @@ public class App {
                                 }
                             }
                             if(guayabita.getPoteJ()==0){
+//                                while(jugador!=null){
+//                                    for(int n=0;n< jugador.size();n++){
+//                                        resultadosJugadores.add(jugador.get(n));
+//                                        jugador.remove(jugador.get(n));
+//                                    }
+//                                }
                                 break;
                             }
                         }
                     }
-                    if(continuar==false){
-                        resultadosJugadores.forEach(resultado->{
-                            JOptionPane.showMessageDialog(null,resultado.getNombre()+" Su resultado final es: "+resultado.getPote());
-                        });
+                    if(continuar==false||guayabita.getPoteJ()==0)
+                    {
+                        jugador.forEach(imprimir->{JOptionPane.showMessageDialog(null,imprimir.getNombre()+" su resultado es "+imprimir.getPote());});
+                        resultadosJugadores.forEach(imprimirT->{JOptionPane.showMessageDialog(null,imprimirT.getNombre()+" su resultado es "+imprimirT.getPote());});
                     }
-                    else{
-                        jugador.forEach(resultado->{
-                            JOptionPane.showMessageDialog(null,resultado.getNombre()+" Su resultado final es: "+resultado.getPote());
-                        });
-                    }
+
                     jugador.clear();
                     resultadosJugadores.clear();
                     guayabita.setPoteJ(0);
